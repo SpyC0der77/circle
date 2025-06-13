@@ -25,7 +25,6 @@ import {
    CircleCheck,
    BarChart3,
    Tag,
-   Folder,
 } from 'lucide-react';
 import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

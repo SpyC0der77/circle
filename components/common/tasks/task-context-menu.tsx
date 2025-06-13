@@ -14,7 +14,6 @@ import {
    User,
    BarChart3,
    Tag,
-   Folder,
    CalendarClock,
    Pencil,
    Link as LinkIcon,
