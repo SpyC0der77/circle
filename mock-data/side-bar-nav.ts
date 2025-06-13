@@ -31,16 +31,6 @@ export const inboxItems = [
 
 export const workspaceItems = [
    {
-      name: 'Teams',
-      url: '/lndev-ui/teams',
-      icon: ContactRound,
-   },
-   {
-      name: 'Projects',
-      url: '/lndev-ui/projects',
-      icon: Box,
-   },
-   {
       name: 'Members',
       url: '/lndev-ui/members',
       icon: UserRound,
@@ -85,11 +75,6 @@ export const featuresItems = [
       name: 'Labels',
       url: '/settings/labels',
       icon: Tag,
-   },
-   {
-      name: 'Projects',
-      url: '/settings/projects',
-      icon: Box,
    },
    {
       name: 'Initiatives',

@@ -17,7 +17,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { StatusSelector } from './status-selector';
 import { PrioritySelector } from './priority-selector';
 import { AssigneeSelector } from './assignee-selector';
-import { ProjectSelector } from './project-selector';
 import { LabelSelector } from './label-selector';
 import { ranks } from '@/mock-data/tasks';
 import { DialogTitle } from '@radix-ui/react-dialog';
@@ -53,7 +52,6 @@ export function CreateNewTask() {
          labels: [],
          createdAt: new Date().toISOString(),
          cycleId: '',
-         project: undefined,
          subtasks: [],
          rank: ranks[ranks.length - 1],
       };
@@ -131,12 +129,6 @@ export function CreateNewTask() {
                      assignee={addTaskForm.assignee}
                      onChange={(newAssignee) =>
                         setAddTaskForm({ ...addTaskForm, assignee: newAssignee })
-                     }
-                  />
-                  <ProjectSelector
-                     project={addTaskForm.project}
-                     onChange={(newProject) =>
-                        setAddTaskForm({ ...addTaskForm, project: newProject })
                      }
                   />
                   <LabelSelector

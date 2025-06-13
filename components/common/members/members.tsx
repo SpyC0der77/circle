@@ -10,7 +10,6 @@ export default function Members() {
             <div className="w-[70%] md:w-[60%] lg:w-[55%]">Name</div>
             <div className="w-[30%] md:w-[20%] lg:w-[15%]">Status</div>
             <div className="hidden lg:block w-[15%]">Joined</div>
-            <div className="w-[30%] hidden md:block md:w-[20%] lg:w-[15%]">Teams</div>
          </div>
 
          <div className="w-full">

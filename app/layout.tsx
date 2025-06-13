@@ -21,7 +21,7 @@ export const metadata: Metadata = {
       default: 'Circle by lndev-ui',
    },
    description:
-      'Project management interface inspired by Linear. Built with Next.js and shadcn/ui, this application allows tracking of tasks, projects and teams with a modern, responsive UI.',
+      'Project management interface inspired by Linear. Built with Next.js and shadcn/ui, this application allows tracking of tasks with a modern, responsive UI.',
    openGraph: {
       type: 'website',
       locale: 'en_US',
