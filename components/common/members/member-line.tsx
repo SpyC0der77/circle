@@ -1,7 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { statusUserColors, User } from '@/mock-data/users';
 import { format } from 'date-fns';
-import { TeamsTooltip } from './teams-tooltip';
 
 interface MemberLineProps {
    user: User;
@@ -33,9 +32,6 @@ export default function MemberLine({ user }: MemberLineProps) {
          </div>
          <div className="hidden lg:block w-[15%] text-xs text-muted-foreground">
             {format(new Date(user.joinedDate), 'MMM yyyy')}
-         </div>
-         <div className="w-[30%] hidden md:flex md:w-[20%] lg:w-[15%] text-xs text-muted-foreground">
-            <TeamsTooltip teamIds={user.teamIds} />
          </div>
       </div>
    );

@@ -1,7 +1,6 @@
 import { groupTasksByStatus, Task, tasks as mockTasks } from '@/mock-data/tasks';
 import { LabelInterface } from '@/mock-data/labels';
 import { Priority } from '@/mock-data/priorities';
-import { Project } from '@/mock-data/projects';
 import { Status } from '@/mock-data/status';
 import { User } from '@/mock-data/users';
 import { create } from 'zustand';
@@ -11,7 +10,6 @@ interface FilterOptions {
    assignee?: string[];
    priority?: string[];
    labels?: string[];
-   project?: string[];
 }
 
 interface TasksState {
@@ -32,7 +30,6 @@ interface TasksState {
    filterByPriority: (priorityId: string) => Task[];
    filterByAssignee: (userId: string | null) => Task[];
    filterByLabel: (labelId: string) => Task[];
-   filterByProject: (projectId: string) => Task[];
    searchTasks: (query: string) => Task[];
    filterTasks: (filters: FilterOptions) => Task[];
 
@@ -48,9 +45,6 @@ interface TasksState {
    // Labels management
    addTaskLabel: (taskId: string, label: LabelInterface) => void;
    removeTaskLabel: (taskId: string, labelId: string) => void;
-
-   // Project management
-   updateTaskProject: (taskId: string, newProject: Project | undefined) => void;
 
    // Utility functions
    getTaskById: (id: string) => Task | undefined;
@@ -117,11 +111,6 @@ export const useTasksStore = create<TasksState>((set, get) => ({
    filterByLabel: (labelId: string) => {
       return get().tasks.filter((task) => task.labels.some((label) => label.id === labelId));
    },
-
-   filterByProject: (projectId: string) => {
-      return get().tasks.filter((task) => task.project?.id === projectId);
-   },
-
    searchTasks: (query: string) => {
       const lowerCaseQuery = query.toLowerCase();
       return get().tasks.filter(
@@ -169,13 +158,6 @@ export const useTasksStore = create<TasksState>((set, get) => ({
          );
       }
 
-      // Filter by project
-      if (filters.project && filters.project.length > 0) {
-         filteredTasks = filteredTasks.filter(
-            (task) => task.project && filters.project!.includes(task.project.id)
-         );
-      }
-
       return filteredTasks;
    },
 
@@ -209,11 +191,6 @@ export const useTasksStore = create<TasksState>((set, get) => ({
          const updatedLabels = task.labels.filter((label) => label.id !== labelId);
          get().updateTask(taskId, { labels: updatedLabels });
       }
-   },
-
-   // Project management
-   updateTaskProject: (taskId: string, newProject: Project | undefined) => {
-      get().updateTask(taskId, { project: newProject });
    },
 
    // Utility functions

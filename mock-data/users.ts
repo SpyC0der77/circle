@@ -6,7 +6,6 @@ export interface User {
    status: 'online' | 'offline' | 'away';
    role: 'Member' | 'Admin' | 'Guest';
    joinedDate: string;
-   teamIds: string[];
 }
 
 const avatarUrl = (seed: string) => `https://api.dicebear.com/9.x/glass/svg?seed=${seed}`;
@@ -26,7 +25,6 @@ export const users: User[] = [
       status: 'online',
       role: 'Admin',
       joinedDate: '2022-01-01',
-      teamIds: ['CORE', 'PERF', 'DESIGN', 'WEB'],
    },
    {
       id: 'sophia',
@@ -36,7 +34,6 @@ export const users: User[] = [
       status: 'offline',
       role: 'Admin',
       joinedDate: '2023-06-04',
-      teamIds: ['CORE', 'PERF'],
    },
    {
       id: 'mason',
@@ -46,7 +43,6 @@ export const users: User[] = [
       status: 'away',
       role: 'Member',
       joinedDate: '2023-11-01',
-      teamIds: ['CORE', 'DESIGN'],
    },
    {
       id: 'emma',
@@ -56,7 +52,6 @@ export const users: User[] = [
       status: 'online',
       role: 'Member',
       joinedDate: '2023-03-20',
-      teamIds: ['CORE'],
    },
    {
       id: 'alex',
@@ -66,7 +61,6 @@ export const users: User[] = [
       status: 'online',
       role: 'Member',
       joinedDate: '2023-05-15',
-      teamIds: ['DESIGN', 'PERF'],
    },
    {
       id: 'olivia',
@@ -76,7 +70,6 @@ export const users: User[] = [
       status: 'offline',
       role: 'Admin',
       joinedDate: '2022-08-22',
-      teamIds: ['PERF'],
    },
    {
       id: 'lucas',
@@ -86,7 +79,6 @@ export const users: User[] = [
       status: 'away',
       role: 'Member',
       joinedDate: '2023-02-14',
-      teamIds: ['CORE', 'DESIGN', 'PERF'],
    },
    {
       id: 'isabella',
@@ -96,7 +88,6 @@ export const users: User[] = [
       status: 'online',
       role: 'Member',
       joinedDate: '2022-11-30',
-      teamIds: ['DESIGN'],
    },
    {
       id: 'ethan',
@@ -106,7 +97,6 @@ export const users: User[] = [
       status: 'offline',
       role: 'Member',
       joinedDate: '2023-07-18',
-      teamIds: ['PERF'],
    },
    {
       id: 'amelia',
@@ -116,7 +106,6 @@ export const users: User[] = [
       status: 'online',
       role: 'Guest',
       joinedDate: '2022-05-09',
-      teamIds: ['DESIGN'],
    },
    {
       id: 'noah',
@@ -126,7 +115,6 @@ export const users: User[] = [
       status: 'away',
       role: 'Member',
       joinedDate: '2023-09-27',
-      teamIds: ['PERF', 'DESIGN'],
    },
    {
       id: 'charlotte',
@@ -136,7 +124,6 @@ export const users: User[] = [
       status: 'online',
       role: 'Guest',
       joinedDate: '2022-04-03',
-      teamIds: ['PERF'],
    },
    {
       id: 'aiden',
@@ -146,7 +133,6 @@ export const users: User[] = [
       status: 'offline',
       role: 'Admin',
       joinedDate: '2023-01-12',
-      teamIds: ['DESIGN'],
    },
    {
       id: 'mia',
@@ -156,7 +142,6 @@ export const users: User[] = [
       status: 'online',
       role: 'Member',
       joinedDate: '2022-10-05',
-      teamIds: ['DESIGN', 'PERF'],
    },
    {
       id: 'logan',
@@ -166,7 +151,6 @@ export const users: User[] = [
       status: 'away',
       role: 'Guest',
       joinedDate: '2023-08-14',
-      teamIds: ['PERF', 'DESIGN'],
    },
    {
       id: 'harper',
@@ -176,7 +160,6 @@ export const users: User[] = [
       status: 'offline',
       role: 'Member',
       joinedDate: '2022-07-29',
-      teamIds: ['PERF'],
    },
    {
       id: 'gabriel',
@@ -186,7 +169,6 @@ export const users: User[] = [
       status: 'online',
       role: 'Member',
       joinedDate: '2023-04-17',
-      teamIds: ['DESIGN'],
    },
    {
       id: 'victoria',
@@ -196,7 +178,6 @@ export const users: User[] = [
       status: 'away',
       role: 'Guest',
       joinedDate: '2022-12-08',
-      teamIds: ['DESIGN'],
    },
    {
       id: 'daniel',
@@ -206,7 +187,6 @@ export const users: User[] = [
       status: 'offline',
       role: 'Member',
       joinedDate: '2023-10-21',
-      teamIds: ['PERF'],
    },
    {
       id: 'abigail',
@@ -216,6 +196,5 @@ export const users: User[] = [
       status: 'online',
       role: 'Member',
       joinedDate: '2022-06-17',
-      teamIds: ['DESIGN', 'PERF'],
    },
 ];

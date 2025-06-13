@@ -24,22 +24,12 @@ export const inboxItems = [
    },
    {
       name: 'My tasks',
-      url: '#',
+      url: '/lndev-ui/tasks',
       icon: FolderKanban,
    },
 ];
 
 export const workspaceItems = [
-   {
-      name: 'Teams',
-      url: '/lndev-ui/teams',
-      icon: ContactRound,
-   },
-   {
-      name: 'Projects',
-      url: '/lndev-ui/projects',
-      icon: Box,
-   },
    {
       name: 'Members',
       url: '/lndev-ui/members',
@@ -85,11 +75,6 @@ export const featuresItems = [
       name: 'Labels',
       url: '/settings/labels',
       icon: Tag,
-   },
-   {
-      name: 'Projects',
-      url: '/settings/projects',
-      icon: Box,
    },
    {
       name: 'Initiatives',

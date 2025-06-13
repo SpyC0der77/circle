@@ -105,12 +105,10 @@ export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps) 
                               {filterByAssignee(null).length}
                            </span>
                         </CommandItem>
-                        {users
-                           .filter((user) => user.teamIds.includes('CORE'))
-                           .map((user) => (
-                              <CommandItem
-                                 key={user.id}
-                                 value={user.id}
+                        {users.map((user) => (
+                           <CommandItem
+                              key={user.id}
+                              value={user.id}
                                  onSelect={() => handleAssigneeChange(user.id)}
                                  className="flex items-center justify-between"
                               >

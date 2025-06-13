@@ -14,7 +14,6 @@ import {
    User,
    BarChart3,
    Tag,
-   Folder,
    CalendarClock,
    Pencil,
    Link as LinkIcon,
@@ -39,7 +38,6 @@ import { status } from '@/mock-data/status';
 import { priorities } from '@/mock-data/priorities';
 import { users } from '@/mock-data/users';
 import { labels } from '@/mock-data/labels';
-import { projects } from '@/mock-data/projects';
 import { toast } from 'sonner';
 
 interface TaskContextMenuProps {
@@ -56,7 +54,6 @@ export function TaskContextMenu({ taskId }: TaskContextMenuProps) {
       updateTaskAssignee,
       addTaskLabel,
       removeTaskLabel,
-      updateTaskProject,
       updateTask,
       getTaskById,
    } = useTasksStore();
@@ -104,12 +101,6 @@ export function TaskContextMenu({ taskId }: TaskContextMenuProps) {
       }
    };
 
-   const handleProjectChange = (projectId: string | null) => {
-      if (!taskId) return;
-      const newProject = projectId ? projects.find((p) => p.id === projectId) : undefined;
-      updateTaskProject(taskId, newProject);
-      toast.success(newProject ? `Project set to ${newProject.name}` : 'Project removed');
-   };
 
    const handleSetDueDate = () => {
       if (!taskId) return;
@@ -189,9 +180,7 @@ export function TaskContextMenu({ taskId }: TaskContextMenuProps) {
                   <ContextMenuItem onClick={() => handleAssigneeChange(null)}>
                      <User className="size-4" /> Unassigned
                   </ContextMenuItem>
-                  {users
-                     .filter((user) => user.teamIds.includes('CORE'))
-                     .map((user) => (
+                  {users.map((user) => (
                         <ContextMenuItem
                            key={user.id}
                            onClick={() => handleAssigneeChange(user.id)}
@@ -240,24 +229,6 @@ export function TaskContextMenu({ taskId }: TaskContextMenuProps) {
                </ContextMenuSubContent>
             </ContextMenuSub>
 
-            <ContextMenuSub>
-               <ContextMenuSubTrigger>
-                  <Folder className="mr-2 size-4" /> Project
-               </ContextMenuSubTrigger>
-               <ContextMenuSubContent className="w-64">
-                  <ContextMenuItem onClick={() => handleProjectChange(null)}>
-                     <Folder className="size-4" /> No Project
-                  </ContextMenuItem>
-                  {projects.slice(0, 5).map((project) => (
-                     <ContextMenuItem
-                        key={project.id}
-                        onClick={() => handleProjectChange(project.id)}
-                     >
-                        <project.icon className="size-4" /> {project.name}
-                     </ContextMenuItem>
-                  ))}
-               </ContextMenuSubContent>
-            </ContextMenuSub>
 
             <ContextMenuItem onClick={handleSetDueDate}>
                <CalendarClock className="size-4" /> Set due date...

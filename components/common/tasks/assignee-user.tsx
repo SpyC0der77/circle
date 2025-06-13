@@ -72,12 +72,10 @@ export function AssigneeUser({ user }: AssigneeUserProps) {
                {!currentAssignee && <CheckIcon className="ml-auto h-4 w-4" />}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            {users
-               .filter((user) => user.teamIds.includes('CORE'))
-               .map((user) => (
-                  <DropdownMenuItem
-                     key={user.id}
-                     onClick={(e) => {
+            {users.map((user) => (
+               <DropdownMenuItem
+                  key={user.id}
+                  onClick={(e) => {
                         e.stopPropagation();
                         setCurrentAssignee(user);
                         setOpen(false);
