@@ -9,7 +9,6 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 import { AssigneeUser } from './assignee-user';
 import { LabelBadge } from './label-badge';
 import { PrioritySelector } from './priority-selector';
-import { ProjectBadge } from './project-badge';
 import { StatusSelector } from './status-selector';
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu';
 import { TaskContextMenu } from './task-context-menu';
@@ -35,7 +34,6 @@ function TaskDragPreview({ task }: { task: Task }) {
 
          <div className="flex flex-wrap gap-1.5 mb-3 min-h-[1.5rem]">
             <LabelBadge label={task.labels} />
-            {task.project && <ProjectBadge project={task.project} />}
          </div>
 
          <div className="flex items-center justify-between mt-auto pt-2">
@@ -123,7 +121,6 @@ export function TaskGrid({ task }: TaskGridProps) {
                <h3 className="text-sm font-semibold mb-3 line-clamp-2">{task.title}</h3>
                <div className="flex flex-wrap gap-1.5 mb-3 min-h-[1.5rem]">
                   <LabelBadge label={task.labels} />
-                  {task.project && <ProjectBadge project={task.project} />}
                </div>
                <div className="flex items-center justify-between mt-auto pt-2">
                   <span className="text-xs text-muted-foreground">

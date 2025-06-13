@@ -36,35 +36,6 @@ export const BacklogIcon: React.FC = () => {
    );
 };
 
-export const PausedIcon: React.FC = () => {
-   return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-         <circle
-            cx="7"
-            cy="7"
-            r="6"
-            fill="none"
-            stroke="#0ea5e9"
-            strokeWidth="2"
-            strokeDasharray="3.14 0"
-            strokeDashoffset="-0.7"
-         ></circle>
-         <circle
-            className="progress"
-            cx="7"
-            cy="7"
-            r="2"
-            fill="none"
-            stroke="#0ea5e9"
-            strokeWidth="4"
-            strokeDasharray="6.2517693806436885 100"
-            strokeDashoffset="0"
-            transform="rotate(-90 7 7)"
-         ></circle>
-      </svg>
-   );
-};
-
 export const ToDoIcon: React.FC = () => {
    return (
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -123,35 +94,6 @@ export const InProgressIcon: React.FC = () => {
    );
 };
 
-export const TechnicalReviewIcon: React.FC = () => {
-   return (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-         <circle
-            cx="7"
-            cy="7"
-            r="6"
-            fill="none"
-            stroke="#22c55e"
-            strokeWidth="2"
-            strokeDasharray="3.14 0"
-            strokeDashoffset="-0.7"
-         ></circle>
-         <circle
-            className="progress"
-            cx="7"
-            cy="7"
-            r="2"
-            fill="none"
-            stroke="#22c55e"
-            strokeWidth="4"
-            strokeDasharray="4.167846253762459 100"
-            strokeDashoffset="0"
-            transform="rotate(-90 7 7)"
-         ></circle>
-      </svg>
-   );
-};
-
 export const CompletedIcon: React.FC = () => {
    return (
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -177,17 +119,10 @@ export const CompletedIcon: React.FC = () => {
 };
 
 export const status: Status[] = [
-   { id: 'in-progress', name: 'In Progress', color: '#facc15', icon: InProgressIcon },
-   {
-      id: 'technical-review',
-      name: 'Technical Review',
-      color: '#22c55e',
-      icon: TechnicalReviewIcon,
-   },
-   { id: 'completed', name: 'Completed', color: '#8b5cf6', icon: CompletedIcon },
-   { id: 'paused', name: 'Paused', color: '#0ea5e9', icon: PausedIcon },
    { id: 'to-do', name: 'Todo', color: '#f97316', icon: ToDoIcon },
-   { id: 'backlog', name: 'Backlog', color: '#ec4899', icon: BacklogIcon },
+   { id: 'in-progress', name: 'In Progress', color: '#facc15', icon: InProgressIcon },
+   { id: 'completed', name: 'Completed', color: '#8b5cf6', icon: CompletedIcon },
+   { id: 'cancelled', name: 'Cancelled', color: '#ef4444', icon: BacklogIcon },
 ];
 
 export const StatusIcon: React.FC<{ statusId: string }> = ({ statusId }) => {

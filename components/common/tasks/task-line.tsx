@@ -5,7 +5,6 @@ import { format } from 'date-fns';
 import { AssigneeUser } from './assignee-user';
 import { LabelBadge } from './label-badge';
 import { PrioritySelector } from './priority-selector';
-import { ProjectBadge } from './project-badge';
 import { StatusSelector } from './status-selector';
 import { motion } from 'motion/react';
 
@@ -37,7 +36,6 @@ export function TaskLine({ task, layoutId = false }: { task: Task; layoutId?: bo
                   <div className="w-3 shrink-0"></div>
                   <div className="-space-x-5 hover:space-x-1 lg:space-x-1 items-center justify-end hidden sm:flex duration-200 transition-all">
                      <LabelBadge label={task.labels} />
-                     {task.project && <ProjectBadge project={task.project} />}
                   </div>
                   <span className="text-xs text-muted-foreground shrink-0 hidden sm:inline-block">
                      {format(new Date(task.createdAt), 'MMM dd')}
