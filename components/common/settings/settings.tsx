@@ -64,13 +64,7 @@ const features: Feature[] = [
       actionLabel: 'Learn more',
       activated: true,
    },
-   {
-      icon: <Package className="" size={20} />,
-      title: 'Cycles',
-      description: "Track your team's workload and velocity with Cycles",
-      actionLabel: 'Learn more',
-      teamsActivated: 6,
-   },
+
    {
       icon: <BarChart3 className="" size={20} />,
       title: 'Views',

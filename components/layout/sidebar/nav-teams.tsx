@@ -109,14 +109,6 @@ export function NavTeams() {
                            </SidebarMenuSubItem>
                            <SidebarMenuSubItem>
                               <SidebarMenuSubButton asChild>
-                                 <Link href="/lndev-ui/team/CORE/all">
-                                    <RiDonutChartFill size={14} />
-                                    <span>Cycles</span>
-                                 </Link>
-                              </SidebarMenuSubButton>
-                           </SidebarMenuSubItem>
-                           <SidebarMenuSubItem>
-                              <SidebarMenuSubButton asChild>
                                  <Link href="/lndev-ui/projects">
                                     <Box size={14} />
                                     <span>Projects</span>
