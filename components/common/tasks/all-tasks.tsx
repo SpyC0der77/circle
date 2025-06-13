@@ -1,20 +1,20 @@
 'use client';
 
 import { status } from '@/mock-data/status';
-import { useIssuesStore } from '@/store/issues-store';
+import { useTasksStore } from '@/store/tasks-store';
 import { useSearchStore } from '@/store/search-store';
 import { useViewStore } from '@/store/view-store';
 import { useFilterStore } from '@/store/filter-store';
 import { FC, useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { GroupIssues } from './group-issues';
-import { SearchIssues } from './search-issues';
-import { CustomDragLayer } from './issue-grid';
+import { GroupTasks } from './group-tasks';
+import { SearchTasks } from './search-tasks';
+import { CustomDragLayer } from './task-grid';
 import { cn } from '@/lib/utils';
-import { Issue } from '@/mock-data/issues';
+import { Task } from '@/mock-data/tasks';
 
-export default function AllIssues() {
+export default function AllTasks() {
    const { isSearchOpen, searchQuery } = useSearchStore();
    const { viewType } = useViewStore();
    const { hasActiveFilters } = useFilterStore();
@@ -26,56 +26,56 @@ export default function AllIssues() {
    return (
       <div className={cn('w-full h-full', isViewTypeGrid && 'overflow-x-auto')}>
          {isSearching ? (
-            <SearchIssuesView />
+            <SearchTasksView />
          ) : isFiltering ? (
-            <FilteredIssuesView isViewTypeGrid={isViewTypeGrid} />
+            <FilteredTasksView isViewTypeGrid={isViewTypeGrid} />
          ) : (
-            <GroupIssuesListView isViewTypeGrid={isViewTypeGrid} />
+            <GroupTasksListView isViewTypeGrid={isViewTypeGrid} />
          )}
       </div>
    );
 }
 
-const SearchIssuesView = () => (
+const SearchTasksView = () => (
    <div className="px-6 mb-6">
-      <SearchIssues />
+      <SearchTasks />
    </div>
 );
 
-const FilteredIssuesView: FC<{
+const FilteredTasksView: FC<{
    isViewTypeGrid: boolean;
 }> = ({ isViewTypeGrid = false }) => {
    const { filters } = useFilterStore();
-   const { filterIssues } = useIssuesStore();
+   const { filterTasks } = useTasksStore();
 
-   // Apply filters to get filtered issues
-   const filteredIssues = useMemo(() => {
-      return filterIssues(filters);
-   }, [filterIssues, filters]);
+   // Apply filters to get filtered tasks
+   const filteredTasks = useMemo(() => {
+      return filterTasks(filters);
+   }, [filterTasks, filters]);
 
-   // Group filtered issues by status
-   const filteredIssuesByStatus = useMemo(() => {
-      const result: Record<string, Issue[]> = {};
+   // Group filtered tasks by status
+   const filteredTasksByStatus = useMemo(() => {
+      const result: Record<string, Task[]> = {};
 
       status.forEach((statusItem) => {
-         result[statusItem.id] = filteredIssues.filter(
-            (issue) => issue.status.id === statusItem.id
+         result[statusItem.id] = filteredTasks.filter(
+            (task) => task.status.id === statusItem.id
          );
       });
 
       return result;
-   }, [filteredIssues]);
+   }, [filteredTasks]);
 
    return (
       <DndProvider backend={HTML5Backend}>
          <CustomDragLayer />
          <div className={cn(isViewTypeGrid && 'flex h-full gap-3 px-2 py-2 min-w-max')}>
             {status.map((statusItem) => (
-               <GroupIssues
+               <GroupTasks
                   key={statusItem.id}
                   status={statusItem}
-                  issues={filteredIssuesByStatus[statusItem.id] || []}
-                  count={filteredIssuesByStatus[statusItem.id]?.length || 0}
+                  tasks={filteredTasksByStatus[statusItem.id] || []}
+                  count={filteredTasksByStatus[statusItem.id]?.length || 0}
                />
             ))}
          </div>
@@ -83,20 +83,20 @@ const FilteredIssuesView: FC<{
    );
 };
 
-const GroupIssuesListView: FC<{
+const GroupTasksListView: FC<{
    isViewTypeGrid: boolean;
 }> = ({ isViewTypeGrid = false }) => {
-   const { issuesByStatus } = useIssuesStore();
+   const { tasksByStatus } = useTasksStore();
    return (
       <DndProvider backend={HTML5Backend}>
          <CustomDragLayer />
          <div className={cn(isViewTypeGrid && 'flex h-full gap-3 px-2 py-2 min-w-max')}>
             {status.map((statusItem) => (
-               <GroupIssues
+               <GroupTasks
                   key={statusItem.id}
                   status={statusItem}
-                  issues={issuesByStatus[statusItem.id] || []}
-                  count={issuesByStatus[statusItem.id]?.length || 0}
+                  tasks={tasksByStatus[statusItem.id] || []}
+                  count={tasksByStatus[statusItem.id]?.length || 0}
                />
             ))}
          </div>

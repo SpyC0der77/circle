@@ -1,7 +1,7 @@
 import { Status } from '@/mock-data/status';
 import { create } from 'zustand';
 
-interface CreateIssueState {
+interface CreateTaskState {
    isOpen: boolean;
    defaultStatus: Status | null;
 
@@ -11,7 +11,7 @@ interface CreateIssueState {
    setDefaultStatus: (status: Status | null) => void;
 }
 
-export const useCreateIssueStore = create<CreateIssueState>((set) => ({
+export const useCreateTaskStore = create<CreateTaskState>((set) => ({
    // Initial state
    isOpen: false,
    defaultStatus: null,

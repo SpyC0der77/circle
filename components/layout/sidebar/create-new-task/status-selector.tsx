@@ -10,34 +10,34 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useIssuesStore } from '@/store/issues-store';
-import { priorities, Priority } from '@/mock-data/priorities';
+import { useTasksStore } from '@/store/tasks-store';
+import { status as allStatus, Status } from '@/mock-data/status';
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
-interface PrioritySelectorProps {
-   priority: Priority;
-   onChange: (priority: Priority) => void;
+interface StatusSelectorProps {
+   status: Status;
+   onChange: (status: Status) => void;
 }
 
-export function PrioritySelector({ priority, onChange }: PrioritySelectorProps) {
+export function StatusSelector({ status, onChange }: StatusSelectorProps) {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
-   const [value, setValue] = useState<string>(priority.id);
+   const [value, setValue] = useState<string>(status.id);
 
-   const { filterByPriority } = useIssuesStore();
+   const { filterByStatus } = useTasksStore();
 
    useEffect(() => {
-      setValue(priority.id);
-   }, [priority.id]);
+      setValue(status.id);
+   }, [status.id]);
 
-   const handlePriorityChange = (priorityId: string) => {
-      setValue(priorityId);
+   const handleStatusChange = (statusId: string) => {
+      setValue(statusId);
       setOpen(false);
 
-      const newPriority = priorities.find((p) => p.id === priorityId);
-      if (newPriority) {
-         onChange(newPriority);
+      const newStatus = allStatus.find((s) => s.id === statusId);
+      if (newStatus) {
+         onChange(newStatus);
       }
    };
 
@@ -54,16 +54,14 @@ export function PrioritySelector({ priority, onChange }: PrioritySelectorProps) 
                   aria-expanded={open}
                >
                   {(() => {
-                     const selectedItem = priorities.find((item) => item.id === value);
+                     const selectedItem = allStatus.find((item) => item.id === value);
                      if (selectedItem) {
                         const Icon = selectedItem.icon;
-                        return <Icon className="text-muted-foreground size-4" />;
+                        return <Icon />;
                      }
                      return null;
                   })()}
-                  <span>
-                     {value ? priorities.find((p) => p.id === value)?.name : 'No priority'}
-                  </span>
+                  <span>{value ? allStatus.find((s) => s.id === value)?.name : 'To do'}</span>
                </Button>
             </PopoverTrigger>
             <PopoverContent
@@ -71,24 +69,24 @@ export function PrioritySelector({ priority, onChange }: PrioritySelectorProps) 
                align="start"
             >
                <Command>
-                  <CommandInput placeholder="Set priority..." />
+                  <CommandInput placeholder="Set status..." />
                   <CommandList>
-                     <CommandEmpty>No priority found.</CommandEmpty>
+                     <CommandEmpty>No status found.</CommandEmpty>
                      <CommandGroup>
-                        {priorities.map((item) => (
+                        {allStatus.map((item) => (
                            <CommandItem
                               key={item.id}
                               value={item.id}
-                              onSelect={() => handlePriorityChange(item.id)}
+                              onSelect={() => handleStatusChange(item.id)}
                               className="flex items-center justify-between"
                            >
                               <div className="flex items-center gap-2">
-                                 <item.icon className="text-muted-foreground size-4" />
+                                 <item.icon />
                                  {item.name}
                               </div>
                               {value === item.id && <CheckIcon size={16} className="ml-auto" />}
                               <span className="text-muted-foreground text-xs">
-                                 {filterByPriority(item.id).length}
+                                 {filterByStatus(item.id).length}
                               </span>
                            </CommandItem>
                         ))}

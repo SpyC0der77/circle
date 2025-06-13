@@ -10,22 +10,22 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useIssuesStore } from '@/store/issues-store';
+import { useTasksStore } from '@/store/tasks-store';
 import { priorities, Priority } from '@/mock-data/priorities';
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
 interface PrioritySelectorProps {
    priority: Priority;
-   issueId?: string;
+   taskId?: string;
 }
 
-export function PrioritySelector({ priority, issueId }: PrioritySelectorProps) {
+export function PrioritySelector({ priority, taskId }: PrioritySelectorProps) {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(priority.id);
 
-   const { filterByPriority, updateIssuePriority } = useIssuesStore();
+   const { filterByPriority, updateTaskPriority } = useTasksStore();
 
    useEffect(() => {
       setValue(priority.id);
@@ -35,10 +35,10 @@ export function PrioritySelector({ priority, issueId }: PrioritySelectorProps) {
       setValue(priorityId);
       setOpen(false);
 
-      if (issueId) {
+      if (taskId) {
          const newPriority = priorities.find((p) => p.id === priorityId);
          if (newPriority) {
-            updateIssuePriority(issueId, newPriority);
+            updateTaskPriority(taskId, newPriority);
          }
       }
    };
