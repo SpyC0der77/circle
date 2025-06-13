@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import { HelpButton } from '@/components/layout/sidebar/help-button';
 import { NavInbox } from '@/components/layout/sidebar/nav-inbox';
-import { NavTeams } from '@/components/layout/sidebar/nav-teams';
+import { NavLabels } from '@/components/layout/sidebar/nav-labels';
 import { NavWorkspace } from '@/components/layout/sidebar/nav-workspace';
 import { NavAccount } from '@/components/layout/sidebar/nav-account';
 import { NavFeatures } from '@/components/layout/sidebar/nav-features';
@@ -33,8 +33,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             ) : (
                <>
                   <NavInbox />
-                  <NavWorkspace />
-                  <NavTeams />
+                  <NavLabels />
                </>
             )}
          </SidebarContent>
