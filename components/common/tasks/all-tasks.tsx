@@ -5,7 +5,7 @@ import { useTasksStore } from '@/store/tasks-store';
 import { useSearchStore } from '@/store/search-store';
 import { useViewStore } from '@/store/view-store';
 import { useFilterStore } from '@/store/filter-store';
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { GroupTasks } from './group-tasks';
@@ -14,10 +14,18 @@ import { CustomDragLayer } from './task-grid';
 import { cn } from '@/lib/utils';
 import { Task } from '@/mock-data/tasks';
 
-export default function AllTasks() {
+export default function AllTasks({ initialLabel }: { initialLabel?: string }) {
    const { isSearchOpen, searchQuery } = useSearchStore();
    const { viewType } = useViewStore();
-   const { hasActiveFilters } = useFilterStore();
+   const { hasActiveFilters, setFilter, clearFilterType } = useFilterStore();
+
+   useEffect(() => {
+      if (initialLabel) {
+         setFilter('labels', [initialLabel]);
+      } else {
+         clearFilterType('labels');
+      }
+   }, [initialLabel, setFilter, clearFilterType]);
 
    const isSearching = isSearchOpen && searchQuery.trim() !== '';
    const isViewTypeGrid = viewType === 'grid';

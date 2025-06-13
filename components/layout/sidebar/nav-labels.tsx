@@ -1,36 +1,13 @@
 'use client';
 
-import {
-   Archive,
-   Bell,
-   Box,
-   ChevronRight,
-   CopyMinus,
-   Layers,
-   Link as LinkIcon,
-   MoreHorizontal,
-   Settings,
-} from 'lucide-react';
 import Link from 'next/link';
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import {
-   DropdownMenu,
-   DropdownMenuContent,
-   DropdownMenuItem,
-   DropdownMenuSeparator,
-   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import {
    SidebarGroup,
    SidebarGroupLabel,
    SidebarMenu,
-   SidebarMenuAction,
    SidebarMenuButton,
    SidebarMenuItem,
-   SidebarMenuSub,
-   SidebarMenuSubButton,
-   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { labels } from '@/mock-data/labels';
 
