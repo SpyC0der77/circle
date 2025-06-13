@@ -1,6 +1,6 @@
 # Circle
 
-Project management interface inspired by Linear. Built with Next.js and shadcn/ui, this application allows tracking of tasks, projects and teams with a modern, responsive UI.
+Project management interface inspired by Linear. Built with Next.js and shadcn/ui, this application allows tracking of issues, projects and teams with a modern, responsive UI.
 
 ## 🛠️ Technologies
 

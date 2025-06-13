@@ -9,9 +9,9 @@ import { RiSlackLine } from '@remixicon/react';
 
 export default function Notifications() {
    const [notifications, setNotifications] = useState({
-      teamTaskAdded: false,
-      taskCompleted: false,
-      taskAddedToTriage: false,
+      teamIssueAdded: false,
+      issueCompleted: false,
+      issueAddedToTriage: false,
    });
 
    const handleCheckboxChange = (key: keyof typeof notifications) => {
@@ -40,43 +40,43 @@ export default function Notifications() {
                <div className="space-y-4">
                   <div className="flex items-center justify-between">
                      <label
-                        htmlFor="team-task-added"
+                        htmlFor="team-issue-added"
                         className="text-xs text-muted-foreground cursor-pointer flex-1"
                      >
-                        An task is added to the team
+                        An issue is added to the team
                      </label>
                      <Checkbox
-                        id="team-task-added"
-                        checked={notifications.teamTaskAdded}
-                        onCheckedChange={() => handleCheckboxChange('teamTaskAdded')}
+                        id="team-issue-added"
+                        checked={notifications.teamIssueAdded}
+                        onCheckedChange={() => handleCheckboxChange('teamIssueAdded')}
                      />
                   </div>
 
                   <div className="flex items-center justify-between">
                      <label
-                        htmlFor="task-completed"
+                        htmlFor="issue-completed"
                         className="text-xs text-muted-foreground cursor-pointer flex-1"
                      >
-                        An task is marked completed or canceled
+                        An issue is marked completed or canceled
                      </label>
                      <Checkbox
-                        id="task-completed"
-                        checked={notifications.taskCompleted}
-                        onCheckedChange={() => handleCheckboxChange('taskCompleted')}
+                        id="issue-completed"
+                        checked={notifications.issueCompleted}
+                        onCheckedChange={() => handleCheckboxChange('issueCompleted')}
                      />
                   </div>
 
                   <div className="flex items-center justify-between">
                      <label
-                        htmlFor="task-triage"
+                        htmlFor="issue-triage"
                         className="text-xs text-muted-foreground cursor-pointer flex-1"
                      >
-                        An task is added to the triage queue
+                        An issue is added to the triage queue
                      </label>
                      <Checkbox
-                        id="task-triage"
-                        checked={notifications.taskAddedToTriage}
-                        onCheckedChange={() => handleCheckboxChange('taskAddedToTriage')}
+                        id="issue-triage"
+                        checked={notifications.issueAddedToTriage}
+                        onCheckedChange={() => handleCheckboxChange('issueAddedToTriage')}
                      />
                   </div>
                </div>

@@ -1,15 +1,15 @@
 'use client';
 
-import { useTasksStore } from '@/store/tasks-store';
+import { useIssuesStore } from '@/store/issues-store';
 import { useSearchStore } from '@/store/search-store';
 import { useEffect, useState } from 'react';
-import { TaskLine } from './task-line';
+import { IssueLine } from './issue-line';
 
-export function SearchTasks() {
+export function SearchIssues() {
    const [searchResults, setSearchResults] = useState<
-      ReturnType<typeof useTasksStore.getState>['tasks']
+      ReturnType<typeof useIssuesStore.getState>['issues']
    >([]);
-   const { searchTasks } = useTasksStore();
+   const { searchIssues } = useIssuesStore();
    const { searchQuery, isSearchOpen } = useSearchStore();
 
    useEffect(() => {
@@ -18,9 +18,9 @@ export function SearchTasks() {
          return;
       }
 
-      const results = searchTasks(searchQuery);
+      const results = searchIssues(searchQuery);
       setSearchResults(results);
-   }, [searchQuery, searchTasks]);
+   }, [searchQuery, searchIssues]);
 
    if (!isSearchOpen) {
       return null;
@@ -36,8 +36,8 @@ export function SearchTasks() {
                         <h3 className="text-sm font-medium">Results ({searchResults.length})</h3>
                      </div>
                      <div className="divide-y">
-                        {searchResults.map((task) => (
-                           <TaskLine key={task.id} task={task} layoutId={false} />
+                        {searchResults.map((issue) => (
+                           <IssueLine key={issue.id} issue={issue} layoutId={false} />
                         ))}
                      </div>
                   </div>

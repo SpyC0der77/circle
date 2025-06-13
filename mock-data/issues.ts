@@ -5,7 +5,7 @@ import { Project, projects } from './projects';
 import { Status, status } from './status';
 import { User, users } from './users';
 
-export interface Task {
+export interface Issue {
    id: string;
    identifier: string;
    title: string;
@@ -16,14 +16,14 @@ export interface Task {
    labels: LabelInterface[];
    createdAt: string;
    project?: Project;
-   subtasks?: string[];
+   subissues?: string[];
    rank: string;
    dueDate?: string;
 }
 
-// generates tasks ranks using LexoRank algorithm.
+// generates issues ranks using LexoRank algorithm.
 export const ranks: string[] = [];
-const generateTasksRanks = () => {
+const generateIssuesRanks = () => {
    const firstRank = new LexoRank('a3c');
    ranks.push(firstRank.toString());
    for (let i = 1; i < 30; i++) {
@@ -32,9 +32,9 @@ const generateTasksRanks = () => {
       ranks.push(currentRank.toString());
    }
 };
-generateTasksRanks();
+generateIssuesRanks();
 
-export const tasks: Task[] = [
+export const issues: Issue[] = [
    {
       id: '1',
       identifier: 'LNUI-101',
@@ -58,7 +58,7 @@ export const tasks: Task[] = [
       assignee: users[1],
       labels: [labels[1]],
       createdAt: '2025-03-12',
-      subtasks: ['1', '3'],
+      subissues: ['1', '3'],
       rank: ranks[1],
    },
    {
@@ -98,7 +98,7 @@ export const tasks: Task[] = [
       labels: [labels[4]],
       createdAt: '2025-03-10',
       project: projects[4],
-      subtasks: ['8', '9'],
+      subissues: ['8', '9'],
       rank: ranks[4],
    },
    {
@@ -169,7 +169,7 @@ export const tasks: Task[] = [
    {
       id: '11',
       identifier: 'LNUI-507',
-      title: 'Fix Form validation tasks',
+      title: 'Fix Form validation issues',
       description: '',
       status: status[3],
       priority: priorities[1],
@@ -428,21 +428,21 @@ export const tasks: Task[] = [
    },
 ];
 
-export function groupTasksByStatus(tasks: Task[]): Record<string, Task[]> {
-   return tasks.reduce<Record<string, Task[]>>((acc, task) => {
-      const statusId = task.status.id;
+export function groupIssuesByStatus(issues: Issue[]): Record<string, Issue[]> {
+   return issues.reduce<Record<string, Issue[]>>((acc, issue) => {
+      const statusId = issue.status.id;
 
       if (!acc[statusId]) {
          acc[statusId] = [];
       }
 
-      acc[statusId].push(task);
+      acc[statusId].push(issue);
 
       return acc;
    }, {});
 }
 
-export function sortTasksByPriority(tasks: Task[]): Task[] {
+export function sortIssuesByPriority(issues: Issue[]): Issue[] {
    const priorityOrder: Record<string, number> = {
       'urgent': 0,
       'high': 1,
@@ -451,7 +451,7 @@ export function sortTasksByPriority(tasks: Task[]): Task[] {
       'no-priority': 4,
    };
 
-   return tasks
+   return issues
       .slice()
       .sort(
          (a, b) =>

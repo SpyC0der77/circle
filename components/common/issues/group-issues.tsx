@@ -1,31 +1,31 @@
 'use client';
 
-import { Task } from '@/mock-data/tasks';
+import { Issue } from '@/mock-data/issues';
 import { Status } from '@/mock-data/status';
-import { useTasksStore } from '@/store/tasks-store';
+import { useIssuesStore } from '@/store/issues-store';
 import { useViewStore } from '@/store/view-store';
 import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
 import { FC, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { Button } from '../../ui/button';
-import { TaskDragType, TaskGrid } from './task-grid';
-import { TaskLine } from './task-line';
-import { useCreateTaskStore } from '@/store/create-task-store';
-import { sortTasksByPriority } from '@/mock-data/tasks';
+import { IssueDragType, IssueGrid } from './issue-grid';
+import { IssueLine } from './issue-line';
+import { useCreateIssueStore } from '@/store/create-issue-store';
+import { sortIssuesByPriority } from '@/mock-data/issues';
 import { AnimatePresence, motion } from 'motion/react';
 
-interface GroupTasksProps {
+interface GroupIssuesProps {
    status: Status;
-   tasks: Task[];
+   issues: Issue[];
    count: number;
 }
 
-export function GroupTasks({ status, tasks, count }: GroupTasksProps) {
+export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
    const { viewType } = useViewStore();
    const isViewTypeGrid = viewType === 'grid';
-   const { openModal } = useCreateTaskStore();
-   const sortedTasks = sortTasksByPriority(tasks);
+   const { openModal } = useCreateIssueStore();
+   const sortedIssues = sortIssuesByPriority(issues);
 
    return (
       <div
@@ -73,27 +73,27 @@ export function GroupTasks({ status, tasks, count }: GroupTasksProps) {
 
          {viewType === 'list' ? (
             <div className="space-y-0">
-               {sortedTasks.map((task) => (
-                  <TaskLine key={task.id} task={task} layoutId={true} />
+               {sortedIssues.map((issue) => (
+                  <IssueLine key={issue.id} issue={issue} layoutId={true} />
                ))}
             </div>
          ) : (
-            <TaskGridList tasks={tasks} status={status} />
+            <IssueGridList issues={issues} status={status} />
          )}
       </div>
    );
 }
 
-const TaskGridList: FC<{ tasks: Task[]; status: Status }> = ({ tasks, status }) => {
+const IssueGridList: FC<{ issues: Issue[]; status: Status }> = ({ issues, status }) => {
    const ref = useRef<HTMLDivElement>(null);
-   const { updateTaskStatus } = useTasksStore();
+   const { updateIssueStatus } = useIssuesStore();
 
-   // Set up drop functionality to accept only task items.
+   // Set up drop functionality to accept only issue items.
    const [{ isOver }, drop] = useDrop(() => ({
-      accept: TaskDragType,
-      drop(item: Task, monitor) {
+      accept: IssueDragType,
+      drop(item: Issue, monitor) {
          if (monitor.didDrop() && item.status.id !== status.id) {
-            updateTaskStatus(item.id, status);
+            updateIssueStatus(item.id, status);
          }
       },
       collect: (monitor) => ({
@@ -102,7 +102,7 @@ const TaskGridList: FC<{ tasks: Task[]; status: Status }> = ({ tasks, status }) 
    }));
    drop(ref);
 
-   const sortedTasks = sortTasksByPriority(tasks);
+   const sortedIssues = sortIssuesByPriority(issues);
 
    return (
       <div
@@ -129,8 +129,8 @@ const TaskGridList: FC<{ tasks: Task[]; status: Status }> = ({ tasks, status }) 
                </motion.div>
             )}
          </AnimatePresence>
-         {sortedTasks.map((task) => (
-            <TaskGrid key={task.id} task={task} />
+         {sortedIssues.map((issue) => (
+            <IssueGrid key={issue.id} issue={issue} />
          ))}
       </div>
    );

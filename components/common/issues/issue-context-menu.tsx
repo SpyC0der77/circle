@@ -34,7 +34,7 @@ import {
    Clipboard,
 } from 'lucide-react';
 import React, { useState } from 'react';
-import { useTasksStore } from '@/store/tasks-store';
+import { useIssuesStore } from '@/store/issues-store';
 import { status } from '@/mock-data/status';
 import { priorities } from '@/mock-data/priorities';
 import { users } from '@/mock-data/users';
@@ -42,80 +42,80 @@ import { labels } from '@/mock-data/labels';
 import { projects } from '@/mock-data/projects';
 import { toast } from 'sonner';
 
-interface TaskContextMenuProps {
-   taskId?: string;
+interface IssueContextMenuProps {
+   issueId?: string;
 }
 
-export function TaskContextMenu({ taskId }: TaskContextMenuProps) {
+export function IssueContextMenu({ issueId }: IssueContextMenuProps) {
    const [isSubscribed, setIsSubscribed] = useState(false);
    const [isFavorite, setIsFavorite] = useState(false);
 
    const {
-      updateTaskStatus,
-      updateTaskPriority,
-      updateTaskAssignee,
-      addTaskLabel,
-      removeTaskLabel,
-      updateTaskProject,
-      updateTask,
-      getTaskById,
-   } = useTasksStore();
+      updateIssueStatus,
+      updateIssuePriority,
+      updateIssueAssignee,
+      addIssueLabel,
+      removeIssueLabel,
+      updateIssueProject,
+      updateIssue,
+      getIssueById,
+   } = useIssuesStore();
 
    const handleStatusChange = (statusId: string) => {
-      if (!taskId) return;
+      if (!issueId) return;
       const newStatus = status.find((s) => s.id === statusId);
       if (newStatus) {
-         updateTaskStatus(taskId, newStatus);
+         updateIssueStatus(issueId, newStatus);
          toast.success(`Status updated to ${newStatus.name}`);
       }
    };
 
    const handlePriorityChange = (priorityId: string) => {
-      if (!taskId) return;
+      if (!issueId) return;
       const newPriority = priorities.find((p) => p.id === priorityId);
       if (newPriority) {
-         updateTaskPriority(taskId, newPriority);
+         updateIssuePriority(issueId, newPriority);
          toast.success(`Priority updated to ${newPriority.name}`);
       }
    };
 
    const handleAssigneeChange = (userId: string | null) => {
-      if (!taskId) return;
+      if (!issueId) return;
       const newAssignee = userId ? users.find((u) => u.id === userId) || null : null;
-      updateTaskAssignee(taskId, newAssignee);
+      updateIssueAssignee(issueId, newAssignee);
       toast.success(newAssignee ? `Assigned to ${newAssignee.name}` : 'Unassigned');
    };
 
    const handleLabelToggle = (labelId: string) => {
-      if (!taskId) return;
-      const task = getTaskById(taskId);
+      if (!issueId) return;
+      const issue = getIssueById(issueId);
       const label = labels.find((l) => l.id === labelId);
 
-      if (!task || !label) return;
+      if (!issue || !label) return;
 
-      const hasLabel = task.labels.some((l) => l.id === labelId);
+      const hasLabel = issue.labels.some((l) => l.id === labelId);
 
       if (hasLabel) {
-         removeTaskLabel(taskId, labelId);
+         removeIssueLabel(issueId, labelId);
          toast.success(`Removed label: ${label.name}`);
       } else {
-         addTaskLabel(taskId, label);
+         addIssueLabel(issueId, label);
          toast.success(`Added label: ${label.name}`);
       }
    };
 
    const handleProjectChange = (projectId: string | null) => {
-      if (!taskId) return;
+      if (!issueId) return;
       const newProject = projectId ? projects.find((p) => p.id === projectId) : undefined;
-      updateTaskProject(taskId, newProject);
+      updateIssueProject(issueId, newProject);
       toast.success(newProject ? `Project set to ${newProject.name}` : 'Project removed');
    };
 
    const handleSetDueDate = () => {
-      if (!taskId) return;
+      if (!issueId) return;
       const dueDate = new Date();
       dueDate.setDate(dueDate.getDate() + 7);
-      updateTask(taskId, { dueDate: dueDate.toISOString() });
+      updateIssue(issueId, { dueDate: dueDate.toISOString() });
       toast.success('Due date set to 7 days from now');
    };
 
@@ -124,11 +124,11 @@ export function TaskContextMenu({ taskId }: TaskContextMenuProps) {
    };
 
    const handleMakeCopy = () => {
-      toast.success('Task copied');
+      toast.success('Issue copied');
    };
 
    const handleCreateRelated = () => {
-      toast.success('Related task created');
+      toast.success('Related issue created');
    };
 
    const handleMarkAs = (type: string) => {
@@ -136,12 +136,12 @@ export function TaskContextMenu({ taskId }: TaskContextMenuProps) {
    };
 
    const handleMove = () => {
-      toast.success('Task moved');
+      toast.success('Issue moved');
    };
 
    const handleSubscribe = () => {
       setIsSubscribed(!isSubscribed);
-      toast.success(isSubscribed ? 'Unsubscribed from task' : 'Subscribed to task');
+      toast.success(isSubscribed ? 'Unsubscribed from issue' : 'Subscribed to issue');
    };
 
    const handleFavorite = () => {
@@ -150,10 +150,10 @@ export function TaskContextMenu({ taskId }: TaskContextMenuProps) {
    };
 
    const handleCopy = () => {
-      if (!taskId) return;
-      const task = getTaskById(taskId);
-      if (task) {
-         navigator.clipboard.writeText(task.title);
+      if (!issueId) return;
+      const issue = getIssueById(issueId);
+      if (issue) {
+         navigator.clipboard.writeText(issue.title);
          toast.success('Copied to clipboard');
       }
    };

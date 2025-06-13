@@ -1,6 +1,6 @@
 'use client';
 
-import { Task } from '@/mock-data/tasks';
+import { Issue } from '@/mock-data/issues';
 import { format } from 'date-fns';
 import { motion } from 'motion/react';
 import { useEffect, useRef } from 'react';
@@ -12,37 +12,37 @@ import { PrioritySelector } from './priority-selector';
 import { ProjectBadge } from './project-badge';
 import { StatusSelector } from './status-selector';
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu';
-import { TaskContextMenu } from './task-context-menu';
+import { IssueContextMenu } from './issue-context-menu';
 
-export const TaskDragType = 'TASK';
-type TaskGridProps = {
-   task: Task;
+export const IssueDragType = 'ISSUE';
+type IssueGridProps = {
+   issue: Issue;
 };
 
 // Custom DragLayer component to render the drag preview
-function TaskDragPreview({ task }: { task: Task }) {
+function IssueDragPreview({ issue }: { issue: Issue }) {
    return (
       <div className="w-full p-3 bg-background rounded-md border border-border/50 overflow-hidden">
          <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-1.5">
-               <PrioritySelector priority={task.priority} taskId={task.id} />
-               <span className="text-xs text-muted-foreground font-medium">{task.identifier}</span>
+               <PrioritySelector priority={issue.priority} issueId={issue.id} />
+               <span className="text-xs text-muted-foreground font-medium">{issue.identifier}</span>
             </div>
-            <StatusSelector status={task.status} taskId={task.id} />
+            <StatusSelector status={issue.status} issueId={issue.id} />
          </div>
 
-         <h3 className="text-sm font-semibold mb-3 line-clamp-2">{task.title}</h3>
+         <h3 className="text-sm font-semibold mb-3 line-clamp-2">{issue.title}</h3>
 
          <div className="flex flex-wrap gap-1.5 mb-3 min-h-[1.5rem]">
-            <LabelBadge label={task.labels} />
-            {task.project && <ProjectBadge project={task.project} />}
+            <LabelBadge label={issue.labels} />
+            {issue.project && <ProjectBadge project={issue.project} />}
          </div>
 
          <div className="flex items-center justify-between mt-auto pt-2">
             <span className="text-xs text-muted-foreground">
-               {format(new Date(task.createdAt), 'MMM dd')}
+               {format(new Date(issue.createdAt), 'MMM dd')}
             </span>
-            <AssigneeUser user={task.assignee} />
+            <AssigneeUser user={issue.assignee} />
          </div>
       </div>
    );
@@ -51,13 +51,13 @@ function TaskDragPreview({ task }: { task: Task }) {
 // Custom DragLayer to show custom preview during drag
 export function CustomDragLayer() {
    const { itemType, isDragging, item, currentOffset } = useDragLayer((monitor) => ({
-      item: monitor.getItem() as Task,
+      item: monitor.getItem() as Issue,
       itemType: monitor.getItemType(),
       currentOffset: monitor.getSourceClientOffset(),
       isDragging: monitor.isDragging(),
    }));
 
-   if (!isDragging || itemType !== TaskDragType || !currentOffset) {
+   if (!isDragging || itemType !== IssueDragType || !currentOffset) {
       return null;
    }
 
@@ -69,18 +69,18 @@ export function CustomDragLayer() {
             width: '348px', // Match the width of your cards
          }}
       >
-         <TaskDragPreview task={item} />
+         <IssueDragPreview issue={item} />
       </div>
    );
 }
 
-export function TaskGrid({ task }: TaskGridProps) {
+export function IssueGrid({ issue }: IssueGridProps) {
    const ref = useRef<HTMLDivElement>(null);
 
    // Set up drag functionality.
    const [{ isDragging }, drag, preview] = useDrag(() => ({
-      type: TaskDragType,
-      item: task,
+      type: IssueDragType,
+      item: issue,
       collect: (monitor: DragSourceMonitor) => ({
          isDragging: monitor.isDragging(),
       }),
@@ -93,7 +93,7 @@ export function TaskGrid({ task }: TaskGridProps) {
 
    // Set up drop functionality.
    const [, drop] = useDrop(() => ({
-      accept: TaskDragType,
+      accept: IssueDragType,
    }));
 
    // Connect drag and drop to the element.
@@ -105,7 +105,7 @@ export function TaskGrid({ task }: TaskGridProps) {
             <motion.div
                ref={ref}
                className="w-full p-3 bg-background rounded-md shadow-xs border border-border/50 cursor-default"
-               layoutId={`task-grid-${task.identifier}`}
+               layoutId={`issue-grid-${issue.identifier}`}
                style={{
                   opacity: isDragging ? 0.5 : 1,
                   cursor: isDragging ? 'grabbing' : 'default',
@@ -113,27 +113,27 @@ export function TaskGrid({ task }: TaskGridProps) {
             >
                <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-1.5">
-                     <PrioritySelector priority={task.priority} taskId={task.id} />
+                     <PrioritySelector priority={issue.priority} issueId={issue.id} />
                      <span className="text-xs text-muted-foreground font-medium">
-                        {task.identifier}
+                        {issue.identifier}
                      </span>
                   </div>
-                  <StatusSelector status={task.status} taskId={task.id} />
+                  <StatusSelector status={issue.status} issueId={issue.id} />
                </div>
-               <h3 className="text-sm font-semibold mb-3 line-clamp-2">{task.title}</h3>
+               <h3 className="text-sm font-semibold mb-3 line-clamp-2">{issue.title}</h3>
                <div className="flex flex-wrap gap-1.5 mb-3 min-h-[1.5rem]">
-                  <LabelBadge label={task.labels} />
-                  {task.project && <ProjectBadge project={task.project} />}
+                  <LabelBadge label={issue.labels} />
+                  {issue.project && <ProjectBadge project={issue.project} />}
                </div>
                <div className="flex items-center justify-between mt-auto pt-2">
                   <span className="text-xs text-muted-foreground">
-                     {format(new Date(task.createdAt), 'MMM dd')}
+                     {format(new Date(issue.createdAt), 'MMM dd')}
                   </span>
-                  <AssigneeUser user={task.assignee} />
+                  <AssigneeUser user={issue.assignee} />
                </div>
             </motion.div>
          </ContextMenuTrigger>
-         <TaskContextMenu taskId={task.id} />
+         <IssueContextMenu issueId={issue.id} />
       </ContextMenu>
    );
 }

@@ -10,34 +10,36 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useTasksStore } from '@/store/tasks-store';
-import { priorities, Priority } from '@/mock-data/priorities';
+import { useIssuesStore } from '@/store/issues-store';
+import { status as allStatus, Status } from '@/mock-data/status';
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
-interface PrioritySelectorProps {
-   priority: Priority;
-   onChange: (priority: Priority) => void;
+interface StatusSelectorProps {
+   status: Status;
+   issueId: string;
 }
 
-export function PrioritySelector({ priority, onChange }: PrioritySelectorProps) {
+export function StatusSelector({ status, issueId }: StatusSelectorProps) {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
-   const [value, setValue] = useState<string>(priority.id);
+   const [value, setValue] = useState<string>(status.id);
 
-   const { filterByPriority } = useTasksStore();
+   const { updateIssueStatus, filterByStatus } = useIssuesStore();
 
    useEffect(() => {
-      setValue(priority.id);
-   }, [priority.id]);
+      setValue(status.id);
+   }, [status.id]);
 
-   const handlePriorityChange = (priorityId: string) => {
-      setValue(priorityId);
+   const handleStatusChange = (statusId: string) => {
+      setValue(statusId);
       setOpen(false);
 
-      const newPriority = priorities.find((p) => p.id === priorityId);
-      if (newPriority) {
-         onChange(newPriority);
+      if (issueId) {
+         const newStatus = allStatus.find((s) => s.id === statusId);
+         if (newStatus) {
+            updateIssueStatus(issueId, newStatus);
+         }
       }
    };
 
@@ -47,23 +49,20 @@ export function PrioritySelector({ priority, onChange }: PrioritySelectorProps) 
             <PopoverTrigger asChild>
                <Button
                   id={id}
-                  className="flex items-center justify-center"
-                  size="xs"
-                  variant="secondary"
+                  className="size-7 flex items-center justify-center"
+                  size="icon"
+                  variant="ghost"
                   role="combobox"
                   aria-expanded={open}
                >
                   {(() => {
-                     const selectedItem = priorities.find((item) => item.id === value);
+                     const selectedItem = allStatus.find((item) => item.id === value);
                      if (selectedItem) {
                         const Icon = selectedItem.icon;
-                        return <Icon className="text-muted-foreground size-4" />;
+                        return <Icon />;
                      }
                      return null;
                   })()}
-                  <span>
-                     {value ? priorities.find((p) => p.id === value)?.name : 'No priority'}
-                  </span>
                </Button>
             </PopoverTrigger>
             <PopoverContent
@@ -71,24 +70,24 @@ export function PrioritySelector({ priority, onChange }: PrioritySelectorProps) 
                align="start"
             >
                <Command>
-                  <CommandInput placeholder="Set priority..." />
+                  <CommandInput placeholder="Set status..." />
                   <CommandList>
-                     <CommandEmpty>No priority found.</CommandEmpty>
+                     <CommandEmpty>No status found.</CommandEmpty>
                      <CommandGroup>
-                        {priorities.map((item) => (
+                        {allStatus.map((item) => (
                            <CommandItem
                               key={item.id}
                               value={item.id}
-                              onSelect={() => handlePriorityChange(item.id)}
+                              onSelect={handleStatusChange}
                               className="flex items-center justify-between"
                            >
                               <div className="flex items-center gap-2">
-                                 <item.icon className="text-muted-foreground size-4" />
+                                 <item.icon />
                                  {item.name}
                               </div>
                               {value === item.id && <CheckIcon size={16} className="ml-auto" />}
                               <span className="text-muted-foreground text-xs">
-                                 {filterByPriority(item.id).length}
+                                 {filterByStatus(item.id).length}
                               </span>
                            </CommandItem>
                         ))}

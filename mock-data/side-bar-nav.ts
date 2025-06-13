@@ -23,7 +23,7 @@ export const inboxItems = [
       icon: Inbox,
    },
    {
-      name: 'My tasks',
+      name: 'My issues',
       url: '#',
       icon: FolderKanban,
    },

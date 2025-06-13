@@ -10,22 +10,22 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useTasksStore } from '@/store/tasks-store';
+import { useIssuesStore } from '@/store/issues-store';
 import { status as allStatus, Status } from '@/mock-data/status';
 import { CheckIcon } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 
 interface StatusSelectorProps {
    status: Status;
-   taskId: string;
+   onChange: (status: Status) => void;
 }
 
-export function StatusSelector({ status, taskId }: StatusSelectorProps) {
+export function StatusSelector({ status, onChange }: StatusSelectorProps) {
    const id = useId();
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string>(status.id);
 
-   const { updateTaskStatus, filterByStatus } = useTasksStore();
+   const { filterByStatus } = useIssuesStore();
 
    useEffect(() => {
       setValue(status.id);
@@ -35,11 +35,9 @@ export function StatusSelector({ status, taskId }: StatusSelectorProps) {
       setValue(statusId);
       setOpen(false);
 
-      if (taskId) {
-         const newStatus = allStatus.find((s) => s.id === statusId);
-         if (newStatus) {
-            updateTaskStatus(taskId, newStatus);
-         }
+      const newStatus = allStatus.find((s) => s.id === statusId);
+      if (newStatus) {
+         onChange(newStatus);
       }
    };
 
@@ -49,9 +47,9 @@ export function StatusSelector({ status, taskId }: StatusSelectorProps) {
             <PopoverTrigger asChild>
                <Button
                   id={id}
-                  className="size-7 flex items-center justify-center"
-                  size="icon"
-                  variant="ghost"
+                  className="flex items-center justify-center"
+                  size="xs"
+                  variant="secondary"
                   role="combobox"
                   aria-expanded={open}
                >
@@ -63,6 +61,7 @@ export function StatusSelector({ status, taskId }: StatusSelectorProps) {
                      }
                      return null;
                   })()}
+                  <span>{value ? allStatus.find((s) => s.id === value)?.name : 'To do'}</span>
                </Button>
             </PopoverTrigger>
             <PopoverContent
@@ -78,7 +77,7 @@ export function StatusSelector({ status, taskId }: StatusSelectorProps) {
                            <CommandItem
                               key={item.id}
                               value={item.id}
-                              onSelect={handleStatusChange}
+                              onSelect={() => handleStatusChange(item.id)}
                               className="flex items-center justify-between"
                            >
                               <div className="flex items-center gap-2">

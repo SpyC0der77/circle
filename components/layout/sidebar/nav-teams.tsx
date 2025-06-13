@@ -103,7 +103,7 @@ export function NavTeams() {
                               <SidebarMenuSubButton asChild>
                                  <Link href="/lndev-ui/team/CORE/all">
                                     <CopyMinus size={14} />
-                                    <span>Tasks</span>
+                                    <span>Issues</span>
                                  </Link>
                               </SidebarMenuSubButton>
                            </SidebarMenuSubItem>

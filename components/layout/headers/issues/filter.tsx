@@ -11,7 +11,7 @@ import {
    CommandSeparator,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useTasksStore } from '@/store/tasks-store';
+import { useIssuesStore } from '@/store/issues-store';
 import { useFilterStore } from '@/store/filter-store';
 import { status as allStatus } from '@/mock-data/status';
 import { priorities } from '@/mock-data/priorities';
@@ -41,7 +41,7 @@ export function Filter() {
    const { filters, toggleFilter, clearFilters, getActiveFiltersCount } = useFilterStore();
 
    const { filterByStatus, filterByAssignee, filterByPriority, filterByLabel, filterByProject } =
-      useTasksStore();
+      useIssuesStore();
 
    return (
       <Popover open={open} onOpenChange={setOpen}>
