@@ -3,7 +3,6 @@
 import { ReactNode } from 'react';
 import {
    LifeBuoy,
-   Package,
    BarChart3,
    Layers,
    FileText,

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { ExternalLink, HelpCircle, Keyboard, Search } from 'lucide-react';
+import { HelpCircle, Keyboard, Search } from 'lucide-react';
 
 import {
    DropdownMenu,
@@ -13,8 +13,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import Link from 'next/link';
-import { RiBox3Fill, RiLinkedinFill, RiThreadsFill, RiTwitterXFill } from '@remixicon/react';
 
 export function HelpButton() {
    return (

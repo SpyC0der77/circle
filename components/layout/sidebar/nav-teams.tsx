@@ -33,7 +33,6 @@ import {
    SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { teams } from '@/mock-data/teams';
-import { RiDonutChartFill } from '@remixicon/react';
 
 export function NavTeams() {
    const joinedTeams = teams.filter((t) => t.joined);
