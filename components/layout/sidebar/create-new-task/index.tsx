@@ -7,11 +7,11 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { RiEditLine } from '@remixicon/react';
 import { useState, useEffect, useCallback } from 'react';
-import { Issue } from '@/mock-data/issues';
+import { Task } from '@/mock-data/tasks';
 import { priorities } from '@/mock-data/priorities';
 import { status } from '@/mock-data/status';
-import { useIssuesStore } from '@/store/issues-store';
-import { useCreateIssueStore } from '@/store/create-issue-store';
+import { useTasksStore } from '@/store/tasks-store';
+import { useCreateTaskStore } from '@/store/create-task-store';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { StatusSelector } from './status-selector';
@@ -19,16 +19,16 @@ import { PrioritySelector } from './priority-selector';
 import { AssigneeSelector } from './assignee-selector';
 import { ProjectSelector } from './project-selector';
 import { LabelSelector } from './label-selector';
-import { ranks } from '@/mock-data/issues';
+import { ranks } from '@/mock-data/tasks';
 import { DialogTitle } from '@radix-ui/react-dialog';
 
-export function CreateNewIssue() {
+export function CreateNewTask() {
    const [createMore, setCreateMore] = useState<boolean>(false);
-   const { isOpen, defaultStatus, openModal, closeModal } = useCreateIssueStore();
-   const { addIssue, getAllIssues } = useIssuesStore();
+   const { isOpen, defaultStatus, openModal, closeModal } = useCreateTaskStore();
+   const { addTask, getAllTasks } = useTasksStore();
 
    const generateUniqueIdentifier = useCallback(() => {
-      const identifiers = getAllIssues().map((issue) => issue.identifier);
+      const identifiers = getAllTasks().map((task) => task.identifier);
       let identifier = Math.floor(Math.random() * 999)
          .toString()
          .padStart(3, '0');
@@ -38,7 +38,7 @@ export function CreateNewIssue() {
             .padStart(3, '0');
       }
       return identifier;
-   }, [getAllIssues]);
+   }, [getAllTasks]);
 
    const createDefaultData = useCallback(() => {
       const identifier = generateUniqueIdentifier();
@@ -54,28 +54,28 @@ export function CreateNewIssue() {
          createdAt: new Date().toISOString(),
          cycleId: '',
          project: undefined,
-         subissues: [],
+         subtasks: [],
          rank: ranks[ranks.length - 1],
       };
    }, [defaultStatus, generateUniqueIdentifier]);
 
-   const [addIssueForm, setAddIssueForm] = useState<Issue>(createDefaultData());
+   const [addTaskForm, setAddTaskForm] = useState<Task>(createDefaultData());
 
    useEffect(() => {
-      setAddIssueForm(createDefaultData());
+      setAddTaskForm(createDefaultData());
    }, [createDefaultData]);
 
-   const createIssue = () => {
-      if (!addIssueForm.title) {
+   const createTask = () => {
+      if (!addTaskForm.title) {
          toast.error('Title is required');
          return;
       }
-      toast.success('Issue created');
-      addIssue(addIssueForm);
+      toast.success('Task created');
+      addTask(addTaskForm);
       if (!createMore) {
          closeModal();
       }
-      setAddIssueForm(createDefaultData());
+      setAddTaskForm(createDefaultData());
    };
 
    return (
@@ -100,50 +100,44 @@ export function CreateNewIssue() {
             <div className="px-4 pb-0 space-y-3 w-full">
                <Input
                   className="border-none w-full shadow-none outline-none text-2xl font-medium px-0 h-auto focus-visible:ring-0 overflow-hidden text-ellipsis whitespace-normal break-words"
-                  placeholder="Issue title"
-                  value={addIssueForm.title}
-                  onChange={(e) => setAddIssueForm({ ...addIssueForm, title: e.target.value })}
+                  placeholder="Task title"
+                  value={addTaskForm.title}
+                  onChange={(e) => setAddTaskForm({ ...addTaskForm, title: e.target.value })}
                />
 
                <Textarea
                   className="border-none w-full shadow-none outline-none resize-none px-0 min-h-16 focus-visible:ring-0 break-words whitespace-normal overflow-wrap"
                   placeholder="Add description..."
-                  value={addIssueForm.description}
-                  onChange={(e) =>
-                     setAddIssueForm({ ...addIssueForm, description: e.target.value })
-                  }
+                  value={addTaskForm.description}
+                  onChange={(e) => setAddTaskForm({ ...addTaskForm, description: e.target.value })}
                />
 
                <div className="w-full flex items-center justify-start gap-1.5 flex-wrap">
                   <StatusSelector
-                     status={addIssueForm.status}
-                     onChange={(newStatus) =>
-                        setAddIssueForm({ ...addIssueForm, status: newStatus })
-                     }
+                     status={addTaskForm.status}
+                     onChange={(newStatus) => setAddTaskForm({ ...addTaskForm, status: newStatus })}
                   />
                   <PrioritySelector
-                     priority={addIssueForm.priority}
+                     priority={addTaskForm.priority}
                      onChange={(newPriority) =>
-                        setAddIssueForm({ ...addIssueForm, priority: newPriority })
+                        setAddTaskForm({ ...addTaskForm, priority: newPriority })
                      }
                   />
                   <AssigneeSelector
-                     assignee={addIssueForm.assignee}
+                     assignee={addTaskForm.assignee}
                      onChange={(newAssignee) =>
-                        setAddIssueForm({ ...addIssueForm, assignee: newAssignee })
+                        setAddTaskForm({ ...addTaskForm, assignee: newAssignee })
                      }
                   />
                   <ProjectSelector
-                     project={addIssueForm.project}
+                     project={addTaskForm.project}
                      onChange={(newProject) =>
-                        setAddIssueForm({ ...addIssueForm, project: newProject })
+                        setAddTaskForm({ ...addTaskForm, project: newProject })
                      }
                   />
                   <LabelSelector
-                     selectedLabels={addIssueForm.labels}
-                     onChange={(newLabels) =>
-                        setAddIssueForm({ ...addIssueForm, labels: newLabels })
-                     }
+                     selectedLabels={addTaskForm.labels}
+                     onChange={(newLabels) => setAddTaskForm({ ...addTaskForm, labels: newLabels })}
                   />
                </div>
             </div>
@@ -161,10 +155,10 @@ export function CreateNewIssue() {
                <Button
                   size="sm"
                   onClick={() => {
-                     createIssue();
+                     createTask();
                   }}
                >
-                  Create issue
+                  Create task
                </Button>
             </div>
          </DialogContent>

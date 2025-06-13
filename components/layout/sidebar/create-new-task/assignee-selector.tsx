@@ -10,7 +10,7 @@ import {
    CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useIssuesStore } from '@/store/issues-store';
+import { useTasksStore } from '@/store/tasks-store';
 import { User, users } from '@/mock-data/users';
 import { CheckIcon, UserCircle } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
@@ -26,7 +26,7 @@ export function AssigneeSelector({ assignee, onChange }: AssigneeSelectorProps) 
    const [open, setOpen] = useState<boolean>(false);
    const [value, setValue] = useState<string | null>(assignee?.id || null);
 
-   const { filterByAssignee } = useIssuesStore();
+   const { filterByAssignee } = useTasksStore();
 
    useEffect(() => {
       setValue(assignee?.id || null);

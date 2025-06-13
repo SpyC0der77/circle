@@ -70,7 +70,7 @@ export default function HeaderNav() {
                            }
                         }
                      }}
-                     placeholder="Search issues..."
+                     placeholder="Search tasks..."
                      className="pl-8 h-7 text-sm"
                      onKeyDown={(e) => {
                         if (e.key === 'Escape') {
