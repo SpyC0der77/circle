@@ -24,7 +24,7 @@ export const inboxItems = [
    },
    {
       name: 'My tasks',
-      url: '#',
+      url: '/lndev-ui/tasks',
       icon: FolderKanban,
    },
 ];
